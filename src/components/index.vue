@@ -19,9 +19,9 @@
                     <span>{{item.title}}</span>
                     <p>
                       <span
-                        v-for="(zi, index) in catelist[index].subcates"
-                        :key="index"
-                      >{{zi.title}}&nbsp;</span>
+                        v-for="(it, i) in item.subcates"
+                        :key="i"
+                      >{{it.title}}&nbsp;</span>
                     </p>
                   </h3>
                   <div class="item-box">
