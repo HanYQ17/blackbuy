@@ -8,10 +8,16 @@ Vue.use(ElementUI);
 import './assets/statics/site/css/style.css'  //导入全局样式
 
 import VueRouter from 'vue-router'  //导入路由
-import index from './components/index.vue'  //导入组件
+
+//导入组件
+import index from './components/index.vue'  //首页
+import detail from './components/detail.vue'  //详情
+
+
 Vue.use(VueRouter)
 const routes =[   //写路由规则
-  {path:'/index',component:index}
+  {path:'/index',component:index},  //首页
+  {path:'/detail',component:detail},  //详情
 ]   
 const router = new VueRouter({  //实例化路由对象
   routes
