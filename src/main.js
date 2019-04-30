@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import ElementUI from 'element-ui';  //导入轮播图Element
+import 'element-ui/lib/theme-chalk/index.css';  ////导入轮播图的样式
+Vue.use(ElementUI);
+
 import './assets/statics/site/css/style.css'  //导入全局样式
 
 import VueRouter from 'vue-router'  //导入路由
