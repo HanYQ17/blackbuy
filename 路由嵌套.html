@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/index">登录</router-link>
+        <router-link to="/edit">详情</router-link>
+        <router-view></router-view>
+        
+        
+    </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router@3.0.6/dist/vue-router.js"></script>
+<script>
+
+    // 组件
+    const login = {
+        template: `<h3>登录</h3>`
+    }
+    const edit = {
+        template: `
+        <h3>
+            <router-link to="/edit/edit1">详情1</router-link>
+            <router-link to="/edit/edit2">详情2</router-link>
+            <router-view></router-view>
+        </h3>
+        `
+    }
+    const zujian1 = {
+        template: '<h1>嘻嘻</h1>'
+    }
+    const zujian2 = {
+        template: '<h1>哈哈</h1>'
+    }
+    // 写路由规则
+    const routes = [
+        { path: '/index', component: login },
+        {
+            path: '/edit',
+            component: edit,
+            children: [
+                { path: 'edit1', component: zujian1 },
+                { path: 'edit2', component: zujian2 }
+            ]
+        }
+    ]
+    // 实例化路由
+    const router = new VueRouter({
+        routes
+    })
+
+
+    const vm = new Vue({
+        el: '#app',
+        router    //挂到顶级Vue上
+    })
+</script>
