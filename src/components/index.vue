@@ -84,7 +84,7 @@
           <ul class="img-list">
             <li v-for="(it, i) in item.datas" :key="i">
               <!-- <a href="#/site/goodsinfo/87" class> -->
-              <router-link to="/detail">
+              <router-link :to="'/detail/'+it.artID">
                 <div class="img-box">
                   <img
                     :src="it.img_url"
@@ -138,7 +138,7 @@ export default {
     axios   //获取底部数据
       .get("http://111.230.232.110:8899/site/goods/getgoodsgroup")
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.sectionList = res.data.message;
       });
   },

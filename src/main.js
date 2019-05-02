@@ -17,7 +17,7 @@ import detail from './components/detail.vue'  //详情
 Vue.use(VueRouter)
 const routes =[   //写路由规则
   {path:'/index',component:index},  //首页
-  {path:'/detail',component:detail},  //详情
+  {path:'/detail/:id',component:detail},  //详情 携带id
 ]   
 const router = new VueRouter({  //实例化路由对象
   routes
