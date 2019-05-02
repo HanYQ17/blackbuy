@@ -117,7 +117,7 @@
 import axios from "axios"; //导入请求axios
 import moment from "moment"; //导入时间格式moment
 export default {
-  name: "index",
+  name: "index",  //vue-chrome插件中,可以看到name属性,利于调试
   data() {
     return {
       catelist: [],
