@@ -117,7 +117,7 @@
 
 <script>
 // import axios from "axios"; //导入请求axios
-import moment from "moment"; //导入时间格式moment
+// import moment from "moment"; //导入时间格式moment
 export default {
   name: "index",  //vue-chrome插件中,可以看到name属性,利于调试
   data() {
@@ -145,12 +145,12 @@ export default {
       });
   },
   // 过滤器
-  filters: {
-    formatTime(value) {
-      // return value.split('T')[0]
-      return moment().format("YYYY年MM月HH日");
-    }
-  }
+  // filters: {
+  //   formatTime(value) {
+  //     // return value.split('T')[0]
+  //     return moment(value).format("YYYY年MM月HH日");
+  //   }
+  // }
 };
 </script>
 

@@ -13,7 +13,14 @@
         <div class="wrap-box">
           <div class="left-925">
             <div class="goods-box clearfix">
-              <div class="pic-box"></div>
+              <div class="pic-box">
+                <!-- 轮播图 -->
+                <el-carousel height="330px">
+                  <el-carousel-item v-for="item in imglist" :key="item.article_id">
+                    <img :src="item.thumb_path" alt="" class="pin_img">
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
               <div class="goods-spec">
                 <h1>{{goodsinfo.title}}</h1>
                 <p class="subtitle">{{goodsinfo.sub_title}}</p>
@@ -138,15 +145,15 @@
                   </ul>
                   <div class="page-box" style="margin: 5px 0px 0px 62px;">
                     <!-- 分页组件 -->
-                      <el-pagination
-                        @size-change="handleSizeChange"
-                        @current-change="handleCurrentChange"
-                        :current-page="pageIndex"
-                        :page-sizes="[5, 10, 15, 20]"
-                        :page-size="pageSize"
-                        layout="total, sizes, prev, pager, next, jumper"
-                        :total="totalcount"
-                      ></el-pagination>
+                    <el-pagination
+                      @size-change="handleSizeChange"
+                      @current-change="handleCurrentChange"
+                      :current-page="pageIndex"
+                      :page-sizes="[5, 10, 15, 20]"
+                      :page-size="pageSize"
+                      layout="total, sizes, prev, pager, next, jumper"
+                      :total="totalcount"
+                    ></el-pagination>
                   </div>
                 </div>
               </div>
@@ -208,21 +215,18 @@ export default {
         this.$message.error("请输入内容"); //使用element的消息提示框
       } else {
         this.$axios
-          .post(
-            `/site/validate/comment/post/goods/${
-              this.$route.params.id
-            }`,
-            { commenttxt: this.comment }
-          )
+          .post(`/site/validate/comment/post/goods/${this.$route.params.id}`, {
+            commenttxt: this.comment
+          })
           .then(res => {
             // console.log(res);
             if (res.data.status === 0) {
-              this.$message({ message: res.data.message, type: "success" });  //提示提交成功
-              this.comment = "";   //清空
-              this.pageIndex = 1;  //评论完后返回第一页
-              this.getComments()   //重新渲染
+              this.$message({ message: res.data.message, type: "success" }); //提示提交成功
+              this.comment = ""; //清空
+              this.pageIndex = 1; //评论完后返回第一页
+              this.getComments(); //重新渲染
             } else {
-              this.$message.error(res.data.message);  //提示提交失败
+              this.$message.error(res.data.message); //提示提交失败
             }
           });
       }
@@ -247,9 +251,9 @@ export default {
     getComments() {
       this.$axios
         .get(
-          `/site/comment/getbypage/goods/${
-            this.$route.params.id
-          }?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
+          `/site/comment/getbypage/goods/${this.$route.params.id}?pageIndex=${
+            this.pageIndex
+          }&pageSize=${this.pageSize}`
         )
         .then(res => {
           console.log(res);
@@ -260,12 +264,12 @@ export default {
     // 页容量改变
     handleSizeChange(val) {
       this.pageSize = val;
-      this.getComments()   //重新渲染
+      this.getComments(); //重新渲染
     },
     // 页码改变
     handleCurrentChange(val) {
       this.pageIndex = val;
-      this.getComments()  //重新渲染
+      this.getComments(); //重新渲染
     }
   },
 
@@ -276,11 +280,11 @@ export default {
 
   // 过滤器
   filters: {
-    formatTime(value) {
-      return moment().format("YYYY年MM月HH日");
-    },
+    // formatTime(value) {
+    //   return moment(value).format("YYYY年MM月HH日");
+    // },
     commentTime(value) {
-      return moment().format("YYYY年MM月HH日 h:mm:ss");
+      return moment(value).format("YYYY年MM月HH日 h:mm:ss");
     }
   }
 };
@@ -289,5 +293,12 @@ export default {
 <style>
 .tab-content img {
   display: block;
+}
+.pic-box{
+  width: 390px;
+}
+.pin_img{
+  width: 100%;
+  height: 100%;
 }
 </style>

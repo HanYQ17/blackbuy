@@ -18,7 +18,7 @@ Vue.use(VueRouter)
 //写路由规则
 const routes =[   
   // {path:'/',component:index}, 
-  {path:'/',redirect:'/index'}, //打开页面默认显示首页
+  {path:'/',redirect:'/index'}, //重定向
   {path:'/index',component:index},  //首页
   // {path:'/detail/:id',component:detail},  //详情 携带id
   {path:'/detail',component:detail},  //详情 携带id
