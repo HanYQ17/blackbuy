@@ -13,8 +13,14 @@ import router from './router.js'  //导入抽取的路由
 Vue.config.productionTip = false
 
 
+
+
+
+
+
 // 顶级Vue实例
 new Vue({
   render: h => h(App),
   router   //挂到顶级Vue实例上
+  
 }).$mount('#app')

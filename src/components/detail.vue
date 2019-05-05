@@ -232,7 +232,8 @@ export default {
       axios
         .get(
           `http://111.230.232.110:8899/site/goods/getgoodsinfo/${
-            this.$route.params.id
+            // this.$route.params.id
+            this.$route.query.id
           }`
         )
         .then(res => {

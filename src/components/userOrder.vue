@@ -44,8 +44,29 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: "userOrder"
+  name: "userOrder",
+  data(){
+    return{
+      orderList:[],
+      pageIndex:1,  //当前页
+      pageSize:5,  //页容量
+      totalcount:0,  //总数
+    }
+  },
+  methods: {
+    getOrder(){
+      axios.get(`http://111.230.232.110:8899/site/validate/order/userorderlist?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`).then(res=>{
+        console.log(res);
+        this.orderList = res.data.message
+        this.totalcount = res.totalcount
+      })
+    }
+  },
+  created() {
+    this.getOrder()
+  },
 };
 </script>
 

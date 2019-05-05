@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <!-- 头部 -->
     <div class="header">
       <!-- 1.0 导航栏头部 -->
@@ -25,12 +25,14 @@
               <a>退出</a>
               <strong>|</strong>
             </span>
-            <a href class>
+            <!-- <a href class> -->
+              <router-link to="/cart">
               <i class="iconfont icon-cart"></i>购物车(
               <span id="shoppingCartCount">
                 <span>4</span>
               </span>)
-            </a>
+              </router-link>
+            <!-- </a> -->
           </div>
         </div>
       </div>
@@ -132,8 +134,21 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name:'app',
+  //  meta:{
+  //   requireLogin:true,
+  // },
+};
 </script>
 
-<style>
+<style lang="less">
+  // #app{
+  //   .header{
+  //     background-color: pink !important;
+  //   }
+  //   .footer{
+  //     background-color: skyblue;
+  //   }
+  // }
 </style>
