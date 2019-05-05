@@ -179,7 +179,7 @@
 </template>
 
 <script>
-import axios from "axios"; //导入axios请求
+// import axios from "axios"; //导入axios请求
 import moment from "moment"; //导入时间格式
 export default {
   name: "detail",
@@ -207,9 +207,9 @@ export default {
       if (this.comment === "") {
         this.$message.error("请输入内容"); //使用element的消息提示框
       } else {
-        axios
+        this.$axios
           .post(
-            `http://111.230.232.110:8899/site/validate/comment/post/goods/${
+            `/site/validate/comment/post/goods/${
               this.$route.params.id
             }`,
             { commenttxt: this.comment }
@@ -229,9 +229,9 @@ export default {
     },
     //获取详情数据
     getDetail() {
-      axios
+      this.$axios
         .get(
-          `http://111.230.232.110:8899/site/goods/getgoodsinfo/${
+          `/site/goods/getgoodsinfo/${
             // this.$route.params.id
             this.$route.query.id
           }`
@@ -245,9 +245,9 @@ export default {
     },
     // 评论分页
     getComments() {
-      axios
+      this.$axios
         .get(
-          `http://111.230.232.110:8899/site/comment/getbypage/goods/${
+          `/site/comment/getbypage/goods/${
             this.$route.params.id
           }?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
         )

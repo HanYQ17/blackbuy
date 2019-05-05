@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import axios from "axios"; //导入请求axios
+// import axios from "axios"; //导入请求axios
 import moment from "moment"; //导入时间格式moment
 export default {
   name: "index",  //vue-chrome插件中,可以看到name属性,利于调试
@@ -129,16 +129,16 @@ export default {
     };
   },
   created() {
-    axios
-      .get("http://111.230.232.110:8899/site/goods/gettopdata/goods")
+    this.$axios
+      .get("/site/goods/gettopdata/goods")
       .then(res => {
         // console.log(res);
         this.catelist = res.data.message.catelist;
         this.sliderlist = res.data.message.sliderlist;
         this.toplist = res.data.message.toplist;
       });
-    axios   //获取底部数据
-      .get("http://111.230.232.110:8899/site/goods/getgoodsgroup")
+    this.$axios   //获取底部数据
+      .get("/site/goods/getgoodsgroup")
       .then(res => {
         // console.log(res);
         this.sectionList = res.data.message;

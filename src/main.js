@@ -13,9 +13,12 @@ import router from './router.js'  //导入抽取的路由
 Vue.config.productionTip = false
 
 
+//设置axios到原型上,方便共享
+import axios from 'axios' 
+Vue.prototype.$axios = axios;
 
-
-
+//设置axios的基地址
+axios.defaults.baseURL = 'http://111.230.232.110:8899'
 
 
 // 顶级Vue实例
