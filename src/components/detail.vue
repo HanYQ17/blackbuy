@@ -16,7 +16,7 @@
               <div class="pic-box">
                 <!-- 轮播图 -->
                 <el-carousel height="330px">
-                  <el-carousel-item v-for="item in imglist" :key="item.article_id">
+                  <el-carousel-item v-for="item in imglist" :key="item.id">
                     <img :src="item.thumb_path" alt="" class="pin_img">
                   </el-carousel-item>
                 </el-carousel>
@@ -50,7 +50,6 @@
                         <!-- 计数器 -->
                         <el-input-number
                           v-model="num"
-                          @change="handleChange"
                           :min="1"
                           :max="goodsinfo.stock_quantity"
                           label="描述文字"
@@ -153,6 +152,7 @@
                       :page-size="pageSize"
                       layout="total, sizes, prev, pager, next, jumper"
                       :total="totalcount"
+                      background
                     ></el-pagination>
                   </div>
                 </div>
@@ -166,12 +166,18 @@
                 <ul class="side-img-list">
                   <li v-for="(item, index) in hotgoodslist" :key="index">
                     <div class="img-box">
-                      <a href="#/site/goodsinfo/90" class>
+                      <!-- <a href="#/site/goodsinfo/90" class> -->
+                      <router-link :to="'/detail?id='+item.id">
                         <img :src="item.img_url">
-                      </a>
+                      </router-link>
+                      <!-- </a> -->
                     </div>
                     <div class="txt-box">
-                      <a href="#/site/goodsinfo/90" class>{{item.title}}</a>
+                      <!-- <a href="#/site/goodsinfo/90" class> -->
+                      <router-link :to="'/detail?id='+item.id">
+                        {{item.title}}
+                      </router-link>
+                      <!-- </a> -->
                       <span>{{item.add_time | formatTime}}</span>
                     </div>
                   </li>
@@ -206,16 +212,16 @@ export default {
   },
   methods: {
     //计数器
-    handleChange(value) {
-      console.log(value);
-    },
+    // handleChange(value) {
+    //   console.log(value);
+    // },
     // 发表评论
     postComment() {
       if (this.comment === "") {
         this.$message.error("请输入内容"); //使用element的消息提示框
       } else {
         this.$axios
-          .post(`/site/validate/comment/post/goods/${this.$route.params.id}`, {
+          .post(`/site/validate/comment/post/goods/${this.$route.query.id}`, {
             commenttxt: this.comment
           })
           .then(res => {
@@ -251,24 +257,27 @@ export default {
     getComments() {
       this.$axios
         .get(
-          `/site/comment/getbypage/goods/${this.$route.params.id}?pageIndex=${
+          `/site/comment/getbypage/goods/${
+            this.$route.query.id
+            // this.$route.params.id
+            }?pageIndex=${
             this.pageIndex
           }&pageSize=${this.pageSize}`
         )
         .then(res => {
-          console.log(res);
+          // console.log(res);
           this.totalcount = res.data.totalcount;
           this.commentList = res.data.message;
-        });
+        })
     },
     // 页容量改变
     handleSizeChange(val) {
-      this.pageSize = val;
+      this.pageSize = val; //点击赋值
       this.getComments(); //重新渲染
     },
     // 页码改变
     handleCurrentChange(val) {
-      this.pageIndex = val;
+      this.pageIndex = val; //点击赋值
       this.getComments(); //重新渲染
     }
   },
@@ -278,13 +287,42 @@ export default {
     this.getComments(); // 评论分页
   },
 
+  // 侦听器
+  watch: {
+    '$route.query.id'(nw){
+      // 数据
+       this.$axios
+        .get(
+          `/site/goods/getgoodsinfo/${nw}`
+        )
+        .then(res => {
+          this.goodsinfo = res.data.message.goodsinfo;
+          this.hotgoodslist = res.data.message.hotgoodslist;
+          this.imglist = res.data.message.imglist;
+        });
+
+        // 评论
+        this.$axios
+        .get(
+          `/site/comment/getbypage/goods/${nw}?pageIndex=${
+            this.pageIndex
+          }&pageSize=${this.pageSize}`
+        )
+        .then(res => {
+          // console.log(res);
+          this.totalcount = res.data.totalcount;
+          this.commentList = res.data.message;
+        })
+    }
+  },
+
   // 过滤器
   filters: {
     // formatTime(value) {
     //   return moment(value).format("YYYY年MM月HH日");
     // },
     commentTime(value) {
-      return moment(value).format("YYYY年MM月HH日 h:mm:ss");
+      return moment(value).format("YYYY年MM月DD日 h:mm:ss");
     }
   }
 };
